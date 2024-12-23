@@ -1,0 +1,31 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: myapp
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: ola
+  template:
+    metadata:
+      labels:
+        app: ola
+    spec:
+      containers:
+        - name: cont-1
+          image: mdsurem/demo:httpd
+          ports:
+            - containerPort: 80
+          volumeMount:
+            - name: devops
+              mountPath: "/app/volume/jenkins/"
+      imagePullSecrets:
+        - name: docker-hub-secret
+      volumes:
+        - name: devops
+          hostPath:
+            path: "/tmp/volume/app/"
+      
+        
